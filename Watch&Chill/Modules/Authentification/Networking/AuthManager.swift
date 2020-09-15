@@ -12,11 +12,14 @@ import Alamofire
 class AuthNetworkingManager {
   //General request
   @discardableResult
-  private static func performRequest<T:Decodable>(route:AuthRouter, decoder: JSONDecoder = JSONDecoder(), completion:@escaping (AFResult<T>)->Void) -> DataRequest {
+  private static func performRequest<T:Decodable>(route:AuthRouter, decoder: JSONDecoder = JSONDecoder(), completion:@escaping (Result<T, Errors>)->Void) -> DataRequest {
     return AF.request(route)
       .responseDecodable (decoder: decoder){ (response: DataResponse<T ,AFError>) in
-        completion(response.result)
+        completion(response.result )
+        
         debugPrint(response)
+        
+      
     }
   }
   //Generate Token
@@ -32,3 +35,5 @@ class AuthNetworkingManager {
     performRequest(route: AuthRouter.createSession(key : APIParameterKey.APIkey, request_token: request_token), completion: completion)
   }
 }
+
+extension Auth

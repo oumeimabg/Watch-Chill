@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Alamofire
 class LoginViewModel{
   var usersArray : [User] = []         
   func checkUserDefaults(){
@@ -26,6 +26,7 @@ class LoginViewModel{
       case .success(let login):
         self.login(username: username, password: password,requestToken: login.request_token!)
       case .failure(let error):
+          // display alert with error message
         print("Stooop")
         print(error.localizedDescription)
       }
